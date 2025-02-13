@@ -23,7 +23,7 @@ def main():
     total_months = total_years * 12
 
     # --- Income & Growth ---
-    MONTHLY_SALARY = 5000.0          # Initial monthly salary
+    MONTHLY_SALARY = 10000.0          # Initial monthly salary
     ANNUAL_SALARY_GROWTH = 0.02      # 2% annual salary increase
 
     # --- Inflation for Monthly Expenses ---
@@ -34,13 +34,13 @@ def main():
     BASE_TRAVEL = 200.0
     BASE_SCHOOLING = 300.0
     BASE_HEALTHCARE = 400.0
-    BASE_INCIDENTALS = 2500  # "catch-all" category
+    BASE_INCIDENTALS = 2500.0        # "catch-all" category
 
     # --- Investment Growth ---
-    ANNUAL_INVESTMENT_RETURN = 0.06  # 6% annual
+    ANNUAL_INVESTMENT_RETURN = 0.07  # 7% annual
 
     # --- Renting Details ---
-    RENT_PER_MONTH = 1500.0
+    RENT_PER_MONTH = 2000.0
     ANNUAL_RENT_GROWTH = 0.025       # 2.5% annual
 
     # --- Buying Details ---
@@ -55,7 +55,7 @@ def main():
     AVERAGE_YEARLY_MAINTENANCE = 5000.0
 
     # Home appreciation (positive or negative)
-    ANNUAL_HOME_APPRECIATION = 0.02  # 2% per year
+    ANNUAL_HOME_APPRECIATION = 0.05  # 5% per year
 
     # ================
     # Display Assumptions
@@ -118,9 +118,11 @@ def main():
     else:
         monthly_mortgage_payment = 0.0
 
-    monthly_property_tax = (HOME_COST * PROPERTY_TAX_RATE) / 12
-    monthly_insurance = HOME_INSURANCE_PER_YEAR / 12
-    monthly_maintenance = AVERAGE_YEARLY_MAINTENANCE / 12
+    # Convert your annual property tax, insurance, and maintenance to percentage rates relative to HOME_COST:
+    # We'll do this so we can recalculate them each month based on the new house_value.
+    property_tax_annual_rate = PROPERTY_TAX_RATE  # e.g., 0.01
+    insurance_annual_rate = HOME_INSURANCE_PER_YEAR / HOME_COST  # e.g., 1200 / 350000
+    maintenance_annual_rate = AVERAGE_YEARLY_MAINTENANCE / HOME_COST  # e.g., 5000 / 350000
 
     # ================
     # Part 3: Tracking & Simulation
@@ -155,31 +157,36 @@ def main():
             rent_investment_balance += leftover_rent
         rent_investment_balance *= (1 + monthly_investment_growth)
 
-        # --- Buying: Pay Mortgage/Costs, Invest Leftover
+        # --- Buying: Update House Value, then compute monthly taxes, insurance, maintenance
+        house_value *= (1 + monthly_home_appreciation)
+
+        # Recalc monthly property tax, insurance, maintenance based on current house_value
+        dynamic_monthly_property_tax = (house_value * property_tax_annual_rate) / 12
+        dynamic_monthly_insurance = (house_value * insurance_annual_rate) / 12
+        dynamic_monthly_maintenance = (house_value * maintenance_annual_rate) / 12
+
         if month <= number_of_payments:
             monthly_ownership_cost = (
                 monthly_mortgage_payment +
-                monthly_property_tax +
-                monthly_insurance +
-                monthly_maintenance
+                dynamic_monthly_property_tax +
+                dynamic_monthly_insurance +
+                dynamic_monthly_maintenance
             )
         else:
             monthly_ownership_cost = (
-                monthly_property_tax +
-                monthly_insurance +
-                monthly_maintenance
+                dynamic_monthly_property_tax +
+                dynamic_monthly_insurance +
+                dynamic_monthly_maintenance
             )
 
         total_buy_cost += monthly_ownership_cost
+
         leftover_buy = current_monthly_salary - current_standard_expenses - monthly_ownership_cost
         if leftover_buy > 0:
             buy_investment_balance += leftover_buy
         buy_investment_balance *= (1 + monthly_investment_growth)
 
-        # House Appreciation
-        house_value *= (1 + monthly_home_appreciation)
-
-        # Increase Salary, Rent, Standard Expenses (monthly growth)
+        # --- Increase Salary, Rent, Standard Expenses (monthly growth)
         current_monthly_salary *= (1 + monthly_salary_growth)
         current_rent *= (1 + monthly_rent_growth)
         current_standard_expenses *= (1 + monthly_inflation)
