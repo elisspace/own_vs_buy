@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rent vs. Buy Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .input-section, .output-section {
+            margin: 20px;
+        }
+        .slider-label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Rent vs. Buy Calculator</h2>
+    <p><a href="/logout">Logout</a></p>
+
+    <div class="input-section">
+        <h3>Input Values</h3>
+        <div>
+            <label for="currentAge">Current Age</label>
+            <input type="range" id="currentAge" min="20" max="70" step="1" value="30" oninput="updateDisplay('currentAgeDisplay', this.value)">
+            <span id="currentAgeDisplay">30</span>
+        </div>
+
+        <div>
+            <label for="ageAtDeath">Age at Death</label>
+            <input type="range" id="ageAtDeath" min="70" max="120" step="1" value="90" oninput="updateDisplay('ageAtDeathDisplay', this.value)">
+            <span id="ageAtDeathDisplay">90</span>
+        </div>
+
+        <div>
+            <label for="monthlySalary">Monthly Salary</label>
+            <input type="range" id="monthlySalary" min="1000" max="20000" step="500" value="5000" oninput="updateDisplay('monthlySalaryDisplay', this.value)">
+            <span id="monthlySalaryDisplay">5000</span>
+        </div>
+
+        <div>
+            <label for="monthlyRent">Monthly Rent</label>
+            <input type="range" id="monthlyRent" min="500" max="4000" step="100" value="1500" oninput="updateDisplay('monthlyRentDisplay', this.value)">
+            <span id="monthlyRentDisplay">1500</span>
+        </div>
+
+        <div>
+            <label for="homeCost">Home Cost</label>
+            <input type="range" id="homeCost" min="100000" max="1000000" step="50000" value="400000" oninput="updateDisplay('homeCostDisplay', this.value)">
+            <span id="homeCostDisplay">400000</span>
+        </div>
+
+        <div>
+            <label for="downPayment">Down Payment</label>
+            <input type="range" id="downPayment" min="0" max="400000" step="10000" value="80000" oninput="updateDisplay('downPaymentDisplay', this.value)">
+            <span id="downPaymentDisplay">80000</span>
+        </div>
+
+        <div>
+            <label for="monthlyExpenses">Monthly Expenses (non-housing)</label>
+            <input type="range" id="monthlyExpenses" min="500" max="5000" step="100" value="1500" oninput="updateDisplay('monthlyExpensesDisplay', this.value)">
+            <span id="monthlyExpensesDisplay">1500</span>
+        </div>
+
+        <div>
+            <label for="investmentReturn">Investment Return (%)</label>
+            <input type="range" id="investmentReturn" min="0" max="15" step="0.5" value="6" oninput="updateDisplay('investmentReturnDisplay', this.value)">
+            <span id="investmentReturnDisplay">6</span>%
+        </div>
+
+        <button onclick="calculate()">Calculate</button>
+    </div>
+
+    <div class="output-section">
+        <h3>Results</h3>
+        <p>Renter's Final Investment Balance: <span id="renterInvestment"></span></p>
+        <p>Homeowner's Investment Balance: <span id="homeownerInvestment"></span></p>
+        <p>Final House Value: <span id="houseValue"></span></p>
+        <p>Homeowner Net Worth: <span id="homeownerNetWorth"></span></p>
+        <p>Renter Net Worth: <span id="renterNetWorth"></span></p>
+        <h4 id="comparisonResult"></h4>
+    </div>
+
+    <script>
+        // Simple helper to update the text next to sliders
+        function updateDisplay(spanId, val) {
+            document.getElementById(spanId).innerText = val;
+        }
+
+        function calculate() {
+            // Collect the current slider/input values
+            let data = {
+                current_age: document.getElementById('currentAge').value,
+                age_at_death: document.getElementById('ageAtDeath').value,
+                monthly_salary: document.getElementById('monthlySalary').value,
+                monthly_rent: document.getElementById('monthlyRent').value,
+                home_cost: document.getElementById('homeCost').value,
+                down_payment: document.getElementById('downPayment').value,
+                monthly_expenses: document.getElementById('monthlyExpenses').value,
+                investment_return: document.getElementById('investmentReturn').value
+            };
+
+            // Send data to the server via POST /compute
+            fetch('/compute', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Update the page with the returned results
+                document.getElementById('renterInvestment').innerText = result.renter_investment_balance;
+                document.getElementById('homeownerInvestment').innerText = result.homeowner_investment_balance;
+                document.getElementById('houseValue').innerText = result.final_house_value;
+                document.getElementById('homeownerNetWorth').innerText = result.homeowner_net_worth;
+                document.getElementById('renterNetWorth').innerText = result.renter_net_worth;
+
+                // Compare difference
+                let difference = result.difference;
+                let comparison = "";
+                if (difference > 0) {
+                    comparison = `Buying is ahead by $${Math.abs(difference).toLocaleString()}.`;
+                    // color it green
+                    document.getElementById('comparisonResult').style.color = 'green';
+                } else if (difference < 0) {
+                    comparison = `Renting is ahead by $${Math.abs(difference).toLocaleString()}.`;
+                    // color it green
+                    document.getElementById('comparisonResult').style.color = 'green';
+                } else {
+                    comparison = "Both scenarios come out exactly the same!";
+                    document.getElementById('comparisonResult').style.color = 'orange';
+                }
+                document.getElementById('comparisonResult').innerText = comparison;
+            })
+            .catch(err => {
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>
+
