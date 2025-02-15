@@ -82,8 +82,8 @@ def simulate_own_vs_rent(params):
     """
 
     # 1. Validate and extract parameters with fallback defaults
-    start_age = validate_param(params.get("start_age", 30), 18, 70, "start_age")
-    end_age = validate_param(params.get("end_age", 65), 30, 100, "end_age")
+    start_age = validate_param(params.get("start_age", 30), 17, 90, "start_age")
+    end_age = validate_param(params.get("end_age", 65), 30, 120, "end_age")
     
     # If start_age >= end_age, just return empty or handle gracefully
     if start_age >= end_age:
@@ -91,32 +91,32 @@ def simulate_own_vs_rent(params):
 
     total_months = int((end_age - start_age) * 12)
 
-    annual_income = validate_param(params.get("annual_income", 60000), 30000, 200000, "annual_income")
+    annual_income = validate_param(params.get("annual_income", 60000), 10000, 20000000, "annual_income")
     annual_salary_growth = params.get("annual_salary_growth", 0.02)
 
-    home_price = validate_param(params.get("home_price", 300000), 100000, 1000000, "home_price")
-    down_payment = validate_param(params.get("down_payment", 60000), 10000, 500000, "down_payment")
+    home_price = validate_param(params.get("home_price", 300000), 100000, 20000000, "home_price")
+    down_payment = validate_param(params.get("down_payment", 60000), 0, 500000, "down_payment")
     mortgage_rate = validate_param(params.get("mortgage_rate", 0.04), 0.0, 0.10, "mortgage_rate")
-    mortgage_term = validate_param(params.get("mortgage_term", 30), 10, 40, "mortgage_term")
+    mortgage_term = validate_param(params.get("mortgage_term", 30), 10, 70, "mortgage_term")
 
-    property_tax_rate = validate_param(params.get("property_tax_rate", 0.012), 0.0, 0.05, "property_tax_rate")
-    homeowner_insurance = validate_param(params.get("homeowner_insurance", 1200), 500, 5000, "homeowner_insurance")
-    maintenance_rate = validate_param(params.get("maintenance_rate", 0.01), 0.0, 0.05, "maintenance_rate")
+    property_tax_rate = validate_param(params.get("property_tax_rate", 0.012), 0.0, 0.15, "property_tax_rate")
+    homeowner_insurance = validate_param(params.get("homeowner_insurance", 1200), 500, 20000, "homeowner_insurance")
+    maintenance_rate = validate_param(params.get("maintenance_rate", 0.01), 0.0, 0.20, "maintenance_rate")
 
     rent = validate_param(params.get("rent", 1500), 500, 5000, "rent")
     rent_escalation_rate = validate_param(params.get("rent_escalation_rate", 0.03), 0.0, 0.10, "rent_escalation_rate")
-    renters_insurance_annual = params.get("renters_insurance_annual", 240)
+    renters_insurance_annual = validate_params(params.get("renters_insurance_annual", 240), 0.0, 5000, "renters_insurance_annual")
 
     home_appreciation = validate_param(params.get("home_appreciation", 0.03), 0.0, 0.10, "home_appreciation")
-    investment_return = validate_param(params.get("investment_return", 0.05), 0.0, 0.15, "investment_return")
-    marginal_tax_rate = validate_param(params.get("marginal_tax_rate", 0.25), 0.0, 0.50, "marginal_tax_rate")
-    inflation_rate = validate_param(params.get("inflation_rate", 0.02), 0.0, 0.10, "inflation_rate")
+    investment_return = validate_param(params.get("investment_return", 0.05), 0.0, 0.25, "investment_return")
+    marginal_tax_rate = validate_param(params.get("marginal_tax_rate", 0.25), 0.0, 1.0, "marginal_tax_rate")
+    inflation_rate = validate_param(params.get("inflation_rate", 0.02), 0.0, 0.50, "inflation_rate")
 
     # New monthly expenses
-    monthly_travel = validate_param(params.get("monthly_travel", 300), 0, 2000, "monthly_travel")
-    monthly_groceries = validate_param(params.get("monthly_groceries", 400), 0, 2000, "monthly_groceries")
-    monthly_bills = validate_param(params.get("monthly_bills", 250), 0, 2000, "monthly_bills")
-    monthly_healthcare = validate_param(params.get("monthly_healthcare", 200), 0, 2000, "monthly_healthcare")
+    monthly_travel = validate_param(params.get("monthly_travel", 300), 0, 10000, "monthly_travel")
+    monthly_groceries = validate_param(params.get("monthly_groceries", 400), 0, 10000, "monthly_groceries")
+    monthly_bills = validate_param(params.get("monthly_bills", 250), 0, 100000, "monthly_bills")
+    monthly_healthcare = validate_param(params.get("monthly_healthcare", 200), 0, 10000, "monthly_healthcare")
 
     # 2. Convert annual rates to monthly approximation
     monthly_salary_growth = (1 + annual_salary_growth) ** (1/12) - 1
