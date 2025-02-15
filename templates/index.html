@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Own vs Rent Analyzer</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .slider-container { margin-bottom: 15px; }
+    label { display: inline-block; width: 250px; }
+    input[type=range] { width: 300px; }
+  </style>
+</head>
+<body>
+  <h1>Own vs Rent Analyzer</h1>
+  <div>
+    <div class="slider-container">
+      <label for="annual_income">Annual Income ($):</label>
+      <input type="range" id="annual_income" min="30000" max="200000" step="1000" value="60000" oninput="updateValue('annual_income')">
+      <span id="annual_income_val">60000</span>
+    </div>
+    <div class="slider-container">
+      <label for="home_price">Home Price ($):</label>
+      <input type="range" id="home_price" min="100000" max="1000000" step="10000" value="300000" oninput="updateValue('home_price')">
+      <span id="home_price_val">300000</span>
+    </div>
+    <div class="slider-container">
+      <label for="down_payment">Down Payment ($):</label>
+      <input type="range" id="down_payment" min="10000" max="500000" step="5000" value="60000" oninput="updateValue('down_payment')">
+      <span id="down_payment_val">60000</span>
+    </div>
+    <div class="slider-container">
+      <label for="mortgage_rate">Mortgage Rate (%):</label>
+      <input type="range" id="mortgage_rate" min="1" max="10" step="0.1" value="4" oninput="updateValue('mortgage_rate')">
+      <span id="mortgage_rate_val">4</span>
+    </div>
+    <div class="slider-container">
+      <label for="mortgage_term">Mortgage Term (years):</label>
+      <input type="range" id="mortgage_term" min="10" max="40" step="1" value="30" oninput="updateValue('mortgage_term')">
+      <span id="mortgage_term_val">30</span>
+    </div>
+    <div class="slider-container">
+      <label for="property_tax_rate">Property Tax Rate (%):</label>
+      <input type="range" id="property_tax_rate" min="0" max="5" step="0.1" value="1.2" oninput="updateValue('property_tax_rate')">
+      <span id="property_tax_rate_val">1.2</span>
+    </div>
+    <div class="slider-container">
+      <label for="homeowner_insurance">Homeowner Insurance ($/year):</label>
+      <input type="range" id="homeowner_insurance" min="500" max="5000" step="100" value="1200" oninput="updateValue('homeowner_insurance')">
+      <span id="homeowner_insurance_val">1200</span>
+    </div>
+    <div class="slider-container">
+      <label for="maintenance_rate">Maintenance Rate (%):</label>
+      <input type="range" id="maintenance_rate" min="0" max="5" step="0.1" value="1" oninput="updateValue('maintenance_rate')">
+      <span id="maintenance_rate_val">1</span>
+    </div>
+    <div class="slider-container">
+      <label for="rent">Rent ($/month):</label>
+      <input type="range" id="rent" min="500" max="5000" step="50" value="1500" oninput="updateValue('rent')">
+      <span id="rent_val">1500</span>
+    </div>
+    <div class="slider-container">
+      <label for="rent_escalation_rate">Rent Escalation Rate (%):</label>
+      <input type="range" id="rent_escalation_rate" min="0" max="10" step="0.1" value="3" oninput="updateValue('rent_escalation_rate')">
+      <span id="rent_escalation_rate_val">3</span>
+    </div>
+    <div class="slider-container">
+      <label for="home_appreciation">Home Appreciation Rate (%):</label>
+      <input type="range" id="home_appreciation" min="0" max="10" step="0.1" value="3" oninput="updateValue('home_appreciation')">
+      <span id="home_appreciation_val">3</span>
+    </div>
+    <div class="slider-container">
+      <label for="investment_return">Investment Return (%):</label>
+      <input type="range" id="investment_return" min="0" max="15" step="0.1" value="5" oninput="updateValue('investment_return')">
+      <span id="investment_return_val">5</span>
+    </div>
+    <div class="slider-container">
+      <label for="marginal_tax_rate">Marginal Tax Rate (%):</label>
+      <input type="range" id="marginal_tax_rate" min="0" max="50" step="1" value="25" oninput="updateValue('marginal_tax_rate')">
+      <span id="marginal_tax_rate_val">25</span>
+    </div>
+    <div class="slider-container">
+      <label for="inflation_rate">Inflation Rate (%):</label>
+      <input type="range" id="inflation_rate" min="0" max="10" step="0.1" value="2" oninput="updateValue('inflation_rate')">
+      <span id="inflation_rate_val">2</span>
+    </div>
+    <div class="slider-container">
+      <label for="start_age">Start Age:</label>
+      <input type="range" id="start_age" min="18" max="70" step="1" value="30" oninput="updateValue('start_age')">
+      <span id="start_age_val">30</span>
+    </div>
+    <div class="slider-container">
+      <label for="end_age">End Age:</label>
+      <input type="range" id="end_age" min="30" max="100" step="1" value="65" oninput="updateValue('end_age')">
+      <span id="end_age_val">65</span>
+    </div>
+    <button onclick="runSimulation()">Run Simulation</button>
+  </div>
+
+  <h2>Results</h2>
+  <div id="results">
+    <p id="renter_investment"></p>
+    <p id="homeowner_investment"></p>
+    <p id="final_house_value"></p>
+    <p id="homeowner_net_worth"></p>
+    <p id="renter_net_worth"></p>
+    <p id="lifetime_income"></p>
+    <p id="comparison"></p>
+  </div>
+
+  <script>
+    function updateValue(id) {
+      var val = document.getElementById(id).value;
+      document.getElementById(id + '_val').innerText = val;
+    }
+
+    function runSimulation() {
+      // Gather parameters from the sliders
+      var params = {
+        annual_income: parseFloat(document.getElementById('annual_income').value),
+        home_price: parseFloat(document.getElementById('home_price').value),
+        down_payment: parseFloat(document.getElementById('down_payment').value),
+        mortgage_rate: parseFloat(document.getElementById('mortgage_rate').value) / 100,
+        mortgage_term: parseFloat(document.getElementById('mortgage_term').value),
+        property_tax_rate: parseFloat(document.getElementById('property_tax_rate').value) / 100,
+        homeowner_insurance: parseFloat(document.getElementById('homeowner_insurance').value),
+        maintenance_rate: parseFloat(document.getElementById('maintenance_rate').value) / 100,
+        rent: parseFloat(document.getElementById('rent').value),
+        rent_escalation_rate: parseFloat(document.getElementById('rent_escalation_rate').value) / 100,
+        home_appreciation: parseFloat(document.getElementById('home_appreciation').value) / 100,
+        investment_return: parseFloat(document.getElementById('investment_return').value) / 100,
+        marginal_tax_rate: parseFloat(document.getElementById('marginal_tax_rate').value) / 100,
+        inflation_rate: parseFloat(document.getElementById('inflation_rate').value) / 100,
+        start_age: parseFloat(document.getElementById('start_age').value),
+        end_age: parseFloat(document.getElementById('end_age').value),
+        annual_salary_growth: 0.02,  // fixed for now
+        renters_insurance_annual: 240
+      };
+
+      // Send the parameters to the backend /calculate endpoint via POST
+      fetch('/calculate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(params)
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('renter_investment').innerText = "Renter's Final Investment Balance: $" + data.renter_final_investment.toFixed(2);
+        document.getElementById('homeowner_investment').innerText = "Homeowner's Final Investment Balance: $" + data.homeowner_final_investment.toFixed(2);
+        document.getElementById('final_house_value').innerText = "Final House Value: $" + data.final_house_value.toFixed(2);
+        document.getElementById('homeowner_net_worth').innerText = "Homeowner Net Worth: $" + data.homeowner_net_worth.toFixed(2);
+        document.getElementById('renter_net_worth').innerText = "Renter Net Worth: $" + data.renter_net_worth.toFixed(2);
+        document.getElementById('lifetime_income').innerText = "Lifetime Income: $" + data.lifetime_income.toFixed(2);
+        var comparison = data.homeowner_net_worth > data.renter_net_worth ? 
+                         "Home ownership is better over the set duration." : 
+                         "Renting is better over the set duration.";
+        document.getElementById('comparison').innerText = comparison;
+      });
+    }
+  </script>
+</body>
+</html>
+
