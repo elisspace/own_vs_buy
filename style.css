@@ -1,0 +1,105 @@
+/* Pastel color palette example */
+:root {
+  --bg-color: #f9f9f9;
+  --primary-pastel: #aec6cf;
+  --secondary-pastel: #ffb347;
+  --text-color: #333;
+  --header-bg: #77dd77;
+  --footer-bg: #cfcfc4;
+  --white: #fff;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  margin: 0;
+  color: var(--text-color);
+}
+
+header {
+  background-color: var(--header-bg);
+  padding: 1rem;
+  text-align: center;
+  color: var(--white);
+}
+
+header h1 {
+  margin: 0;
+}
+
+footer {
+  background-color: var(--footer-bg);
+  color: var(--text-color);
+  text-align: center;
+  padding: 1rem;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 1rem auto;
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+  margin-bottom: 1rem;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.flex-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+input[type=range] {
+  flex: 1;
+}
+
+input[type=text] {
+  width: 100px;
+  padding: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: right;
+}
+
+button {
+  background-color: var(--primary-pastel);
+  color: var(--text-color);
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: var(--secondary-pastel);
+}
+
+h2 {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+#results {
+  width: 90%;
+  max-width: 800px;
+  margin: 1rem auto;
+  text-align: left;
+}
+
+#results p {
+  margin-bottom: 0.5rem;
+}
+
