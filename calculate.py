@@ -105,7 +105,7 @@ def simulate_own_vs_rent(params):
 
     rent = validate_param(params.get("rent", 1500), 500, 5000, "rent")
     rent_escalation_rate = validate_param(params.get("rent_escalation_rate", 0.03), 0.0, 0.10, "rent_escalation_rate")
-    renters_insurance_annual = validate_params(params.get("renters_insurance_annual", 240), 0.0, 5000, "renters_insurance_annual")
+    renters_insurance_annual = validate_param(params.get("renters_insurance_annual", 240), 0.0, 5000, "renters_insurance_annual")
 
     home_appreciation = validate_param(params.get("home_appreciation", 0.03), 0.0, 0.10, "home_appreciation")
     investment_return = validate_param(params.get("investment_return", 0.05), 0.0, 0.25, "investment_return")
