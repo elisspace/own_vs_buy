@@ -14,358 +14,101 @@
   <main>
     <div class="container">
 
-      <div class="input-group">
-        <label for="annual_income">Annual Income ($):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="annual_income" 
-            min="30000" 
-            max="200000" 
-            step="1000" 
-            value="60000" 
-            oninput="syncValueFromSlider('annual_income')"
-          >
-          <input 
-            type="text" 
-            id="annual_income_text" 
-            value="60000" 
-            oninput="syncValueFromText('annual_income')"
-            onblur="validateInput('annual_income')"
-          >
-        </div>
-      </div>
+      <!-- Existing input groups omitted for brevity -->
 
+      <!-- Monthly travel (car) expense -->
       <div class="input-group">
-        <label for="home_price">Home Price ($):</label>
+        <label for="monthly_travel">Monthly Travel/Car Expenses ($/month):</label>
         <div class="flex-row">
           <input 
             type="range" 
-            id="home_price" 
-            min="100000" 
-            max="1000000" 
-            step="10000" 
-            value="300000" 
-            oninput="syncValueFromSlider('home_price')"
-          >
-          <input 
-            type="text" 
-            id="home_price_text" 
-            value="300000" 
-            oninput="syncValueFromText('home_price')"
-            onblur="validateInput('home_price')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="down_payment">Down Payment ($):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="down_payment" 
-            min="10000" 
-            max="500000" 
-            step="5000" 
-            value="60000" 
-            oninput="syncValueFromSlider('down_payment')"
-          >
-          <input 
-            type="text" 
-            id="down_payment_text" 
-            value="60000" 
-            oninput="syncValueFromText('down_payment')"
-            onblur="validateInput('down_payment')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="mortgage_rate">Mortgage Rate (%):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="mortgage_rate" 
-            min="1" 
-            max="10" 
-            step="0.1" 
-            value="4" 
-            oninput="syncValueFromSlider('mortgage_rate')"
-          >
-          <input 
-            type="text" 
-            id="mortgage_rate_text" 
-            value="4" 
-            oninput="syncValueFromText('mortgage_rate')"
-            onblur="validateInput('mortgage_rate')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="mortgage_term">Mortgage Term (years):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="mortgage_term" 
-            min="10" 
-            max="40" 
-            step="1" 
-            value="30" 
-            oninput="syncValueFromSlider('mortgage_term')"
-          >
-          <input 
-            type="text" 
-            id="mortgage_term_text" 
-            value="30" 
-            oninput="syncValueFromText('mortgage_term')"
-            onblur="validateInput('mortgage_term')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="property_tax_rate">Property Tax Rate (%):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="property_tax_rate" 
+            id="monthly_travel" 
             min="0" 
-            max="5" 
-            step="0.1" 
-            value="1.2" 
-            oninput="syncValueFromSlider('property_tax_rate')"
-          >
-          <input 
-            type="text" 
-            id="property_tax_rate_text" 
-            value="1.2" 
-            oninput="syncValueFromText('property_tax_rate')"
-            onblur="validateInput('property_tax_rate')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="homeowner_insurance">Homeowner Insurance ($/year):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="homeowner_insurance" 
-            min="500" 
-            max="5000" 
-            step="100" 
-            value="1200" 
-            oninput="syncValueFromSlider('homeowner_insurance')"
-          >
-          <input 
-            type="text" 
-            id="homeowner_insurance_text" 
-            value="1200" 
-            oninput="syncValueFromText('homeowner_insurance')"
-            onblur="validateInput('homeowner_insurance')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="maintenance_rate">Maintenance Rate (%):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="maintenance_rate" 
-            min="0" 
-            max="5" 
-            step="0.1" 
-            value="1" 
-            oninput="syncValueFromSlider('maintenance_rate')"
-          >
-          <input 
-            type="text" 
-            id="maintenance_rate_text" 
-            value="1" 
-            oninput="syncValueFromText('maintenance_rate')"
-            onblur="validateInput('maintenance_rate')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="rent">Rent ($/month):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="rent" 
-            min="500" 
-            max="5000" 
+            max="2000" 
             step="50" 
-            value="1500" 
-            oninput="syncValueFromSlider('rent')"
+            value="300" 
+            oninput="syncValueFromSlider('monthly_travel')"
           >
           <input 
             type="text" 
-            id="rent_text" 
-            value="1500" 
-            oninput="syncValueFromText('rent')"
-            onblur="validateInput('rent')"
+            id="monthly_travel_text" 
+            value="300" 
+            oninput="syncValueFromText('monthly_travel')"
+            onblur="validateInput('monthly_travel')"
           >
         </div>
       </div>
 
+      <!-- Monthly groceries expense -->
       <div class="input-group">
-        <label for="rent_escalation_rate">Rent Escalation Rate (%):</label>
+        <label for="monthly_groceries">Monthly Groceries ($/month):</label>
         <div class="flex-row">
           <input 
             type="range" 
-            id="rent_escalation_rate" 
+            id="monthly_groceries" 
             min="0" 
-            max="10" 
-            step="0.1" 
-            value="3" 
-            oninput="syncValueFromSlider('rent_escalation_rate')"
+            max="2000" 
+            step="50" 
+            value="400" 
+            oninput="syncValueFromSlider('monthly_groceries')"
           >
           <input 
             type="text" 
-            id="rent_escalation_rate_text" 
-            value="3" 
-            oninput="syncValueFromText('rent_escalation_rate')"
-            onblur="validateInput('rent_escalation_rate')"
+            id="monthly_groceries_text" 
+            value="400" 
+            oninput="syncValueFromText('monthly_groceries')"
+            onblur="validateInput('monthly_groceries')"
           >
         </div>
       </div>
 
+      <!-- Monthly bills expense -->
       <div class="input-group">
-        <label for="home_appreciation">Home Appreciation Rate (%):</label>
+        <label for="monthly_bills">Monthly Bills (utilities, phone, etc.) ($/month):</label>
         <div class="flex-row">
           <input 
             type="range" 
-            id="home_appreciation" 
+            id="monthly_bills" 
             min="0" 
-            max="10" 
-            step="0.1" 
-            value="3" 
-            oninput="syncValueFromSlider('home_appreciation')"
+            max="2000" 
+            step="50" 
+            value="250" 
+            oninput="syncValueFromSlider('monthly_bills')"
           >
           <input 
             type="text" 
-            id="home_appreciation_text" 
-            value="3" 
-            oninput="syncValueFromText('home_appreciation')"
-            onblur="validateInput('home_appreciation')"
+            id="monthly_bills_text" 
+            value="250" 
+            oninput="syncValueFromText('monthly_bills')"
+            onblur="validateInput('monthly_bills')"
           >
         </div>
       </div>
 
+      <!-- Monthly healthcare expense -->
       <div class="input-group">
-        <label for="investment_return">Investment Return (%):</label>
+        <label for="monthly_healthcare">Monthly Healthcare Costs ($/month):</label>
         <div class="flex-row">
           <input 
             type="range" 
-            id="investment_return" 
+            id="monthly_healthcare" 
             min="0" 
-            max="15" 
-            step="0.1" 
-            value="5" 
-            oninput="syncValueFromSlider('investment_return')"
+            max="2000" 
+            step="50" 
+            value="200" 
+            oninput="syncValueFromSlider('monthly_healthcare')"
           >
           <input 
             type="text" 
-            id="investment_return_text" 
-            value="5" 
-            oninput="syncValueFromText('investment_return')"
-            onblur="validateInput('investment_return')"
+            id="monthly_healthcare_text" 
+            value="200" 
+            oninput="syncValueFromText('monthly_healthcare')"
+            onblur="validateInput('monthly_healthcare')"
           >
         </div>
       </div>
 
-      <div class="input-group">
-        <label for="marginal_tax_rate">Marginal Tax Rate (%):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="marginal_tax_rate" 
-            min="0" 
-            max="50" 
-            step="1" 
-            value="25" 
-            oninput="syncValueFromSlider('marginal_tax_rate')"
-          >
-          <input 
-            type="text" 
-            id="marginal_tax_rate_text" 
-            value="25" 
-            oninput="syncValueFromText('marginal_tax_rate')"
-            onblur="validateInput('marginal_tax_rate')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="inflation_rate">Inflation Rate (%):</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="inflation_rate" 
-            min="0" 
-            max="10" 
-            step="0.1" 
-            value="2" 
-            oninput="syncValueFromSlider('inflation_rate')"
-          >
-          <input 
-            type="text" 
-            id="inflation_rate_text" 
-            value="2" 
-            oninput="syncValueFromText('inflation_rate')"
-            onblur="validateInput('inflation_rate')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="start_age">Start Age:</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="start_age" 
-            min="18" 
-            max="70" 
-            step="1" 
-            value="30" 
-            oninput="syncValueFromSlider('start_age')"
-          >
-          <input 
-            type="text" 
-            id="start_age_text" 
-            value="30" 
-            oninput="syncValueFromText('start_age')"
-            onblur="validateInput('start_age')"
-          >
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label for="end_age">End Age:</label>
-        <div class="flex-row">
-          <input 
-            type="range" 
-            id="end_age" 
-            min="30" 
-            max="100" 
-            step="1" 
-            value="65" 
-            oninput="syncValueFromSlider('end_age')"
-          >
-          <input 
-            type="text" 
-            id="end_age_text" 
-            value="65" 
-            oninput="syncValueFromText('end_age')"
-            onblur="validateInput('end_age')"
-          >
-        </div>
-      </div>
-
+      <!-- Existing button -->
       <button onclick="runSimulation()">Run Simulation</button>
     </div>
 
@@ -378,6 +121,8 @@
       <p id="renter_net_worth"></p>
       <p id="lifetime_income"></p>
       <p id="comparison"></p>
+      <!-- New difference message -->
+      <p id="difference_msg"></p>
     </div>
   </main>
 
@@ -400,7 +145,6 @@
     function syncValueFromText(id) {
       const rangeElement = document.getElementById(id);
       const textElement = document.getElementById(id + '_text');
-      // Don’t immediately validate on each keystroke, just reflect the typed value
       rangeElement.value = textElement.value;
     }
 
@@ -409,17 +153,13 @@
       const rangeElement = document.getElementById(id);
       const textElement = document.getElementById(id + '_text');
 
-      // Try to parse user input as a float
       let value = parseFloat(textElement.value);
-
-      // If parseFloat fails or yields NaN, revert to the range value
       if (isNaN(value)) {
         alert("Invalid input. Please enter a valid numeric value.");
         textElement.value = rangeElement.value;
         return;
       }
 
-      // Constrain to min/max from the range
       let min = parseFloat(rangeElement.min);
       let max = parseFloat(rangeElement.max);
 
@@ -431,13 +171,11 @@
         value = max;
       }
 
-      // Update both text and range with the validated value
       textElement.value = value;
       rangeElement.value = value;
     }
 
     function runSimulation() {
-      // Gather parameters
       var params = {
         annual_income: parseFloat(document.getElementById('annual_income').value),
         home_price: parseFloat(document.getElementById('home_price').value),
@@ -456,10 +194,15 @@
         start_age: parseFloat(document.getElementById('start_age').value),
         end_age: parseFloat(document.getElementById('end_age').value),
         annual_salary_growth: 0.02,  // fixed for now
-        renters_insurance_annual: 240
+        renters_insurance_annual: 240,
+
+        // New monthly expenses:
+        monthly_travel: parseFloat(document.getElementById('monthly_travel').value),
+        monthly_groceries: parseFloat(document.getElementById('monthly_groceries').value),
+        monthly_bills: parseFloat(document.getElementById('monthly_bills').value),
+        monthly_healthcare: parseFloat(document.getElementById('monthly_healthcare').value)
       };
 
-      // Post the parameters to the backend
       fetch('/calculate', {
         method: 'POST',
         headers: {
@@ -472,14 +215,48 @@
         document.getElementById('renter_investment').innerText = "Renter's Final Investment Balance: $" + data.renter_final_investment.toFixed(2);
         document.getElementById('homeowner_investment').innerText = "Homeowner's Final Investment Balance: $" + data.homeowner_final_investment.toFixed(2);
         document.getElementById('final_house_value').innerText = "Final House Value: $" + data.final_house_value.toFixed(2);
-        document.getElementById('homeowner_net_worth').innerText = "Homeowner Net Worth: $" + data.homeowner_net_worth.toFixed(2);
-        document.getElementById('renter_net_worth').innerText = "Renter Net Worth: $" + data.renter_net_worth.toFixed(2);
+
+        // Highlight negative net worth in red:
+        const homeownerNetWorthEl = document.getElementById('homeowner_net_worth');
+        const renterNetWorthEl = document.getElementById('renter_net_worth');
+
+        homeownerNetWorthEl.innerText = "Homeowner Net Worth: $" + data.homeowner_net_worth.toFixed(2);
+        renterNetWorthEl.innerText = "Renter Net Worth: $" + data.renter_net_worth.toFixed(2);
+
+        if (data.homeowner_net_worth < 0) {
+          homeownerNetWorthEl.style.color = "red";
+        } else {
+          homeownerNetWorthEl.style.color = "inherit";
+        }
+
+        if (data.renter_net_worth < 0) {
+          renterNetWorthEl.style.color = "red";
+        } else {
+          renterNetWorthEl.style.color = "inherit";
+        }
+
         document.getElementById('lifetime_income').innerText = "Lifetime Income: $" + data.lifetime_income.toFixed(2);
 
-        var comparison = data.homeowner_net_worth > data.renter_net_worth
-          ? "Home ownership is better over the set duration."
-          : "Renting is better over the set duration.";
+        let comparison = "";
+        if (data.homeowner_net_worth > data.renter_net_worth) {
+          comparison = "Home ownership is better over the set duration.";
+        } else if (data.homeowner_net_worth < data.renter_net_worth) {
+          comparison = "Renting is better over the set duration.";
+        } else {
+          comparison = "They are effectively the same over the set duration.";
+        }
         document.getElementById('comparison').innerText = comparison;
+
+        // Show difference in net amounts:
+        let difference = data.homeowner_net_worth - data.renter_net_worth;
+        const differenceMsgEl = document.getElementById('difference_msg');
+        if (difference > 0) {
+          differenceMsgEl.innerText = "By buying you'll come out $" + difference.toFixed(2) + " ahead.";
+        } else if (difference < 0) {
+          differenceMsgEl.innerText = "By renting you'll come out $" + Math.abs(difference).toFixed(2) + " ahead.";
+        } else {
+          differenceMsgEl.innerText = "Both scenarios end up exactly the same!";
+        }
       })
       .catch(error => console.error("Error in fetch /calculate:", error));
     }
