@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from calculate import simulate_own_vs_rent
-from monte_carlo import run_monte_carlo
+from montecarlo import run_monte_carlo
 
 app = Flask(__name__)
 
