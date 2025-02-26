@@ -26,28 +26,30 @@ import statistics
 
 def sample_distribution(dist_type, mean, stdev, minimum, maximum, mode):
     """
-    Returns a single random value from one of the supported distributions:
-      'normal', 'lognormal', or 'triangular'.
-    
-    For each:
-      - normal: random.gauss(mean, stdev)
-      - lognormal: random.lognormvariate(log_mean, log_stdev) 
-                   (Assumes mean, stdev are in log-space if you're truly modeling lognormal.)
-      - triangular: random.triangular(minimum, maximum, mode)
+    Returns a single random value from a specified distribution, clamped between minimum and maximum.
+
+    Args:
+        dist_type (str): Type of distribution ('normal', 'lognormal', 'triangular').
+        mean (float): Mean of the distribution.
+        stdev (float): Standard deviation (for normal/lognormal).
+        minimum (float): Minimum allowed value.
+        maximum (float): Maximum allowed value.
+        mode (float): Mode of the distribution (for triangular).
+
+    Returns:
+        float: A sampled value, constrained between minimum and maximum.
     """
     if dist_type == 'normal':
         val = random.gauss(mean, stdev)
-        return val
     elif dist_type == 'lognormal':
-        # This placeholder approach interprets 'mean' and 'stdev' as log-space params.
         val = random.lognormvariate(mean, stdev)
-        return val
     elif dist_type == 'triangular':
         val = random.triangular(minimum, maximum, mode)
-        return val
+    else:
+        val = mean  # Fallback to mean if distribution type is unrecognized
 
-    # Default fallback:
-    return mean
+    # Clamp the value between minimum and maximum
+    return max(minimum, min(val, maximum))
 
 
 def calculate_own_scenario(vals):
