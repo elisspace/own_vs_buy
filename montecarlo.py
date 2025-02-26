@@ -296,14 +296,40 @@ def run_single_simulation(dist_params):
       1) Samples a random value for each variable's distribution
       2) Calls calculate_own_scenario and calculate_rent_scenario
       3) Returns (own_value, rent_value)
+
+    Args:
+        dist_params (dict): Dictionary containing distribution parameters for each variable.
+                            Keys are like 'annual_income_dist', values are dicts with 'dist_type', 'mean', etc.
+
+    Returns:
+        tuple: (own_final, rent_final) - the calculated values for owning and renting scenarios.
     """
 
-    # We'll map the front-end variable names to random draws:
-    # For example: 'annual_income' -> sample from dist_params['annual_income_dist']
-    sampled_vals = {}
+    # Define default values for each variable
+    defaults = {
+        'annual_income': 50000,          # Annual income in dollars
+        'home_price': 300000,            # Home price in dollars
+        'down_payment': 60000,           # Down payment in dollars
+        'mortgage_rate': 4,              # Mortgage interest rate in percent
+        'mortgage_term': 30,             # Mortgage term in years
+        'property_tax_rate': 1.2,        # Property tax rate in percent
+        'homeowner_insurance': 1200,     # Annual homeowner insurance in dollars
+        'maintenance_rate': 1,           # Maintenance cost as percent of home value
+        'rent': 1500,                    # Monthly rent in dollars
+        'rent_escalation_rate': 3,       # Annual rent increase in percent
+        'home_appreciation': 3,          # Annual home value appreciation in percent
+        'investment_return': 5,          # Annual investment return in percent
+        'marginal_tax_rate': 25,         # Marginal tax rate in percent
+        'inflation_rate': 2,             # Annual inflation rate in percent
+        'start_age': 30,                 # Starting age in years
+        'end_age': 65,                   # Ending age in years
+        'monthly_travel': 300,           # Monthly travel expenses in dollars
+        'monthly_groceries': 400,        # Monthly grocery expenses in dollars
+        'monthly_bills': 250,            # Monthly utility bills in dollars
+        'monthly_healthcare': 200        # Monthly healthcare expenses in dollars
+    }
 
-    # List of (key, distribution_key) pairs. The second element is how we labeled
-    # the distribution entry in dist_params, e.g. 'annual_income_dist'.
+    # List of (base_key, dist_key) pairs for all variables
     variable_keys = [
         ('annual_income', 'annual_income_dist'),
         ('home_price', 'home_price_dist'),
@@ -327,24 +353,27 @@ def run_single_simulation(dist_params):
         ('monthly_healthcare', 'monthly_healthcare_dist')
     ]
 
-    # For each variable, sample from its distribution, or just use a fallback
-    # if no distribution info is provided:
+    sampled_vals = {}
+
+    # Sample values for each variable
     for base_key, dist_key in variable_keys:
-        if dist_key in dist_params:
+        if dist_key in dist_params and dist_params[dist_key]:
+            # Distribution parameters are provided, sample from the distribution
             d = dist_params[dist_key]
             val = sample_distribution(
-                d.get('dist_type', 'normal'),
-                d.get('mean', 0.0),
-                d.get('stdev', 0.0),
-                d.get('min', 0.0),
-                d.get('max', 0.0),
-                d.get('mode', 0.0)
+                dist_type=d.get('dist_type', 'normal'),
+                mean=d.get('mean', defaults[base_key]),
+                stdev=d.get('stdev', 0.0),
+                minimum=d.get('min', 0.0),
+                maximum=d.get('max', float('inf')),
+                mode=d.get('mode', defaults[base_key])
             )
             sampled_vals[base_key] = val
         else:
-            # If not in dist_params, fallback to a safe default (like 0)
-            sampled_vals[base_key] = 0.0
+            # No distribution provided, use the default value
+            sampled_vals[base_key] = defaults[base_key]
 
+    # Calculate the scenarios using the sampled values
     own_final = calculate_own_scenario(sampled_vals)
     rent_final = calculate_rent_scenario(sampled_vals)
 
